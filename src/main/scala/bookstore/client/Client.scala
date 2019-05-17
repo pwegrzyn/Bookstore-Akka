@@ -8,9 +8,9 @@ object Client {
 
   def main(args: Array[String]): Unit = {
 
-    val config = ConfigFactory.load("client.conf");
+    val config = ConfigFactory.load("client");
     val system = ActorSystem("client", config)
-    val actorRef = system.actorOf(Props[ClientSupervisorActor], "client_supervisor")
+    val actorRef = system.actorOf(Props[ClientSupervisorActor], "client")
 
     println("Init done. Please type in your commands:")
     var loopRunning = true
@@ -23,7 +23,7 @@ object Client {
           actorRef ! OrderBook(title)
         case "stream" :: title :: _ =>
           actorRef ! StreamBookContent(title)
-        case "q" :: _ =>
+        case "quit" :: _ =>
           loopRunning = false
         case _ =>
           println("Invalid command. Please try again...")

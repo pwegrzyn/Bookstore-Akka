@@ -1,12 +1,14 @@
 package bookstore.model
 
-sealed trait BookstoreAction
+import akka.util.ByteString
+
+sealed trait BookstoreAction extends Serializable
 
 sealed trait BookstoreRequest extends BookstoreAction
 
 sealed trait BookstoreResponse extends BookstoreAction
 
-case class Book(title: String, price: Double)
+case class Book(title: String, price: Long)
 
 case class FindBook(bookTitle: String) extends BookstoreRequest
 
@@ -18,7 +20,7 @@ case class BookSearchResult(foundBook: Option[Book]) extends BookstoreResponse
 
 case class OrderCompleted(info: String) extends BookstoreResponse
 
-case class StreamContent(content: String) extends BookstoreResponse
+case class StreamContent(content: ByteString) extends BookstoreResponse
 
 case class StreamCompleted() extends BookstoreResponse
 
