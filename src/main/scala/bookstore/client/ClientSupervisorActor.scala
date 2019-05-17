@@ -3,7 +3,7 @@ package bookstore.client
 import akka.actor.SupervisorStrategy.Restart
 import akka.actor.{Actor, ActorLogging, OneForOneStrategy, Props}
 import akka.event.Logging
-import bookstore.client.ClientSupervisorActor.Command
+import bookstore.model.BookstoreRequest
 
 import scala.concurrent.duration._
 
@@ -21,12 +21,8 @@ class ClientSupervisorActor extends Actor with ActorLogging{
   }
 
   override def receive: Receive = {
-    case cmd: String => context.child(workerName).get ! Command(cmd)
-    case _           => log.info("Client Supervisor received unknown message type!")
+    case cmd: BookstoreRequest => context.child(workerName).get ! cmd
+    case _                     => log.info("Client Supervisor received unknown message type!")
   }
 
-}
-
-object ClientSupervisorActor {
-  case class Command(content: String)
 }
