@@ -1,7 +1,7 @@
 # Bookstore System
 Bookstore System project for Distributed Systems class at AGH-UST (Scala+Akka)
 
-## Schema
+## Architecture
 
 ![alt text](bookstore_akka.png)
 
